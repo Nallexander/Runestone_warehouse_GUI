@@ -42,10 +42,19 @@ function saveToFB(packageID, packageName, shelfCode, temperature, light) {
     });
 };
  
+ 
+function editFB(key) {
+	
+}
+ 
+function deleteFromFB(key) {
+	warehouse.child(key).remove();
+	}
+
 function refreshUI(list) {
-    var lis = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Shelf Code</th><th onclick="sortTable(3)">Temperature</th><th onclick="sortTable()">Light</th></tr>';
+    var lis = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Shelf Code</th><th onclick="sortTable(3)">Temperature</th><th onclick="sortTable()">Light</th><th>Actions</th></tr>';
     for (var i = 0; i < list.length; i++) {
-        lis += '<tr data-key="' + list[i].key + '"><td>' + list[i].packageID + '</td><td>' + list[i].packageName + '</td><td>' + list[i].shelfCode + '</td><td>' + list[i].temperature + '</td><td>' + list[i].light + '</td></tr>';
+        lis += '<tr data-key="' + list[i].key + '"><td>' + list[i].packageID + '</td><td>' + list[i].packageName + '</td><td>' + list[i].shelfCode + '</td><td>' + list[i].temperature + '</td><td>' + list[i].light + '</td><td><button onclick="deleteFromFB(' + "'" + list[i].key + "'" + ')">Remove</button><button onclick="editFB(' + "'" + list[i].key + "'" + ')">Edit</button></tr>';
     };
     document.getElementById('warehouseTable').innerHTML = lis;
 };

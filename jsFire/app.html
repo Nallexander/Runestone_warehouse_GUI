@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <title>Team 1 Warehouse Storage</title>
+    <link rel="stylesheet" type="text/css" href="app.css">
+</head>
+ 
+<body>
+    <h1>Team 1 Warehouse Storage</h1>
+    <hr />
+    
+    <input type="text" id="packageID" class="inputWare" placeholder="Enter package ID" onkeypress="return pressEnter(event)" />
+    <input type="text" id="packageName" class="inputWare" placeholder="Enter package name (optional)" onkeypress="return pressEnter(event)" />
+    <input type="text" id="shelfCode" class="inputWare" placeholder="Enter desired shelf code for storing the package" onkeypress="return pressEnter(event)" />
+	<input type="checkbox" name="specialOptions" value="specialOptions" class="inputBox">Show temperature and light options.<br>
+	<input type="text" id="temperature" class="inputWare" placeholder="Enter required temperature (optional)" onkeypress="return pressEnter(event)" />
+	<input type="text" id="light" class="inputWare" placeholder="Enter required light value (optional)" onkeypress="return pressEnter(event)" />
+	<button id="saveWare" onclick="return saveToList(event)">Save</button>
+    
+    <h4>Stored packages</h4>
+    <table id="warehouseTable">
+
+    </table>
+    <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+ 
+</html>

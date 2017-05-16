@@ -1,20 +1,19 @@
 body {
-	font-family: "calibri";
-    background: #efefef;
     padding: 32px;
     padding-top: 16px;
-    color: #333;
 }
-h1,h3 {
+
+h1,h3,h4 {
 	text-align: center;
 	color: #787878;
 }
  
 .inputWare
 {
-	width: 98%;
+	width: 100%;
 	padding: 9px;
 	font-size: 16px;
+	margin-bottom: 5px;
 }
 
 #warehouseTable {
@@ -24,4 +23,23 @@ h1,h3 {
 
 table, th, td {
     border: 1px solid black;
+}
+
+.center {
+	text-align: center;
+}
+
+#saveWare {
+	background:rgba(120, 120, 120, 0.32);
+	border: 1px solid black;
+}
+
+td {
+	align: center;
+}
+
+th:hover {
+	color: grey;
+	cursor: pointer;
+	
 }

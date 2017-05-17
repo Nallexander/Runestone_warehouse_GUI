@@ -18,11 +18,11 @@ h1,h3,h4 {
 
 #warehouseTable {
 	width: 100%;
-    border: 1px solid black;
+
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid gray;
 }
 
 .center {
@@ -42,4 +42,14 @@ th:hover {
 	color: grey;
 	cursor: pointer;
 	
+}
+
+#mapCanvas {
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#links {
+	text-align: center;
 }

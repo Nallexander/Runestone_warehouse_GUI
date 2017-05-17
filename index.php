@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <html>
-	<?php include "/home/alli8437/public_html/header.php" ?>
-	<a href="jsFire/app.html">Warehouse management</a>
+	<link rel="stylesheet" type="text/css" href="app.css">
+	<div id=links>
+		<a href="jsFire/app.html">Warehouse management</a>
+		<a href="jsFire/map.html">Warehouse map</a>
+	</div>
 </html>

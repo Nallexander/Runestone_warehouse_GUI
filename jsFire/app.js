@@ -1,44 +1,60 @@
-var warehouse = new Firebase('https://runestone-d1faf.firebaseio.com/warehouse');
-
+//Check for an Enter press and try to save data if it happens
 function pressEnter(event) {
     if (event.which == 13 || event.keyCode == 13) {
-		saveToList(event);    
+		saveToList();    
 	}
 }
  
-function saveToList(event) {
+ //Checks if values are valid (Package ID is not empty and a row and shelf is chosen). If they are, it saves the values to the DB, if they're not, it displays an error message
+function saveToList() {
+	//Get input values
     var packageID = document.getElementById('packageID').value.trim();
     var packageName = document.getElementById('packageName').value.trim();
-    var shelfCode = document.getElementById('shelfCode').value.trim();
     var temperature = document.getElementById('temperature').value.trim();
     var light = document.getElementById('light').value.trim();
+    var selectShelf = document.getElementById('selectShelf');
+    var selectRow = document.getElementById('selectRow');
+    var shelf = selectShelf.options[selectShelf.selectedIndex].value;
+    var row = selectRow.options[selectRow.selectedIndex].value;
     
+    document.getElementById('errorMessage').innerHTML = "";
+    
+    //IF package ID is not entered
     if (packageID.length <= 0) {
-	    document.getElementById('packageID').placeholder = "Please enter package ID";	    
-    }
-	if (shelfCode.length <= 0) {
-	    document.getElementById('shelfCode').placeholder = "Please enter shelf code";	    
+	    document.getElementById('errorMessage').innerHTML += "Please enter package ID <br \>";
 	}
+	//If row and shelf are not chosen
+	if (row == 'default' || shelf == 'default') {
+		document.getElementById('errorMessage').innerHTML += "Please choose a row and a shelf. <br \>";
+	}	    
 	else if (packageID.length > 0) {
-        saveToFB(packageID, packageName, shelfCode, temperature, light);
+		//Save values 
+        saveToFB(packageID, packageName, temperature, light, row, shelf);
+        //Empty input fields
         var inputWareFields = document.getElementsByClassName('inputWare');
 		var i;
 		for (i = 0; i < inputWareFields.length; i++) {
 	    	inputWareFields[i].value = '';
 	    }
+	    //Set drop-downs to default
+	    selectShelf.selectedIndex=0;
+	    selectRow.selectedIndex=0;	    
     }
     return false;
 };
- 
-function saveToFB(packageID, packageName, shelfCode, temperature, light) {
+
+ //Saves arguments to DB warehouse
+function saveToFB(packageID, packageName, temperature, light, row, shelf) {
     // this will save data to Firebase
-    warehouse.push({
+    row = parseInt(row, 10);
+    shelf = parseInt(shelf, 10);
+    database.ref('warehouse/' + packageID).set( {
         packageName: packageName,
-        packageID: packageID,
-        shelfCode: shelfCode,
         temperature: temperature,
         light: light,
-        stored: false
+        stored: false,
+        row: row,
+        shelf: shelf
     });
 };
  
@@ -46,38 +62,74 @@ function saveToFB(packageID, packageName, shelfCode, temperature, light) {
 function editFB(key) {
 	
 }
- 
-function deleteFromFB(key) {
-	warehouse.child(key).remove();
-	}
 
+//Deletes key from DB
+function deleteFromFB(key) {
+	refWarehouse.child(key).remove();
+}
+	
+//Adds the number of rows and shelves in DB maps to the drop down menus
+function setShelvesRows() {
+	database.ref('/maps/' + 'test_map').once('value').then(function(snapshot) {
+		var rows = snapshot.val().rows;
+		var shelves = snapshot.val().shelves;
+		selectRow = document.getElementById('selectRow');
+		selectShelf = document.getElementById('selectShelf');
+
+		for (var i = 1; i<=rows; i++){
+		    var opt = document.createElement('option');
+		    opt.value = i;
+		    opt.innerHTML = i;
+		    selectRow.appendChild(opt);
+		}
+		for (var i = 1; i<=shelves; i++){
+		    var opt = document.createElement('option');
+		    opt.value = i;
+		    opt.innerHTML = i;
+		    selectShelf.appendChild(opt);
+		}
+			console.log(rows);
+	});
+	
+}
+setShelvesRows();
+
+//Load elements in list to ID warehouseTable
 function refreshUI(list) {
-    var lis = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Shelf Code</th><th onclick="sortTable(3)">Temperature</th><th onclick="sortTable()">Light</th><th>Actions</th></tr>';
+	newTableHeader = tableHeader;
     for (var i = 0; i < list.length; i++) {
-        lis += '<tr data-key="' + list[i].key + '"><td>' + list[i].packageID + '</td><td>' + list[i].packageName + '</td><td>' + list[i].shelfCode + '</td><td>' + list[i].temperature + '</td><td>' + list[i].light + '</td><td><button onclick="deleteFromFB(' + "'" + list[i].key + "'" + ')">Remove</button><button onclick="editFB(' + "'" + list[i].key + "'" + ')">Edit</button></tr>';
+        newTableHeader += generateTableEntry(list[i]);
     };
-    document.getElementById('warehouseTable').innerHTML = lis;
+    document.getElementById('warehouseTable').innerHTML = newTableHeader;
 };
  
+ //add the entries from data index key in list
+function addToList(data, key, list) {
+    packageName = data[key].packageName ? data[key].packageName : '';
+    packageID = data[key].packageID ? data[key].packageID : '';
+    temperature = data[key].temperature ? data[key].temperature : '';
+    light = data[key].light ? data[key].light : '';                       
+    shelf = data[key].shelf;
+    row = data[key].row;
+    list.push({
+        packageName: packageName,
+        key: key,
+        packageID: packageID,
+        temperature: temperature,
+        light: light,
+        shelf: shelf,
+        row: row
+    })	
+}
+
+//From http://thejackalofjavascript.com/getting-started-with-firebase/
 // this will get fired on inital load as well as when ever there is a change in the data
-warehouse.on("value", function(snapshot) {
+refWarehouse.on("value", function(snapshot) {
     var data = snapshot.val();
     var list = [];
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
-            packageName = data[key].packageName ? data[key].packageName : '';
-            packageID = data[key].packageID ? data[key].packageID : '';
-            shelfCode = data[key].shelfCode ? data[key].shelfCode : '';
-            temperature = data[key].temperature ? data[key].temperature : '';
-            light = data[key].light ? data[key].light : '';                        
-            list.push({
-                packageName: packageName,
-                key: key,
-                packageID: packageID,
-                shelfCode: shelfCode,
-                temperature: temperature,
-                light: light
-            })
+			addToList(data, key, list);
         }
     }
     // refresh the UI

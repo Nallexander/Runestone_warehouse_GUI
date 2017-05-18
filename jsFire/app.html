@@ -21,9 +21,18 @@
     
 	<input type="text" id="packageID" class="inputWare" placeholder="Enter package ID" onkeypress="return pressEnter(event)" />
 	<input type="text" id="packageName" class="inputWare" placeholder="Enter package name (optional)" onkeypress="return pressEnter(event)" />
-    <input type="text" id="shelfCode" class="inputWare" placeholder="Enter desired shelf code for storing the package" onkeypress="return pressEnter(event)" />
 	<input type="text" id="temperature" class="inputWare" placeholder="Enter required temperature (optional)" onkeypress="return pressEnter(event)" />
 	<input type="text" id="light" class="inputWare" placeholder="Enter required light value (optional)" onkeypress="return pressEnter(event)" />
+	<select id="selectRow" name="Select row">
+		<option value="default">Choose a row</option>
+	</select>
+	
+	<select id="selectShelf" name="Select shelf">
+		<option value="default">Choose a shelf</option>
+	</select>
+	
+	<div id="errorMessage">
+	</div>
 	
 	<div class="center">
 		<button id="saveWare" onclick="return saveToList(event)">Save</button>
@@ -33,7 +42,9 @@
     <table id="warehouseTable">
 
     </table>
-    <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+<!--     <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script> -->
+   	<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>	
+    <script type="text/javascript" src="common.js"></script>
     <script type="text/javascript" src="app.js"></script>
 </body>
  

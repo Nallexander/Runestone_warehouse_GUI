@@ -68,31 +68,8 @@ function deleteFromFB(key) {
 	refWarehouse.child(key).remove();
 }
 	
-//Adds the number of rows and shelves in DB maps to the drop down menus
-function setShelvesRows() {
-	database.ref('/maps/' + 'test_map').once('value').then(function(snapshot) {
-		var rows = snapshot.val().rows;
-		var shelves = snapshot.val().shelves;
-		selectRow = document.getElementById('selectRow');
-		selectShelf = document.getElementById('selectShelf');
 
-		for (var i = 1; i<=rows; i++){
-		    var opt = document.createElement('option');
-		    opt.value = i;
-		    opt.innerHTML = i;
-		    selectRow.appendChild(opt);
-		}
-		for (var i = 1; i<=shelves; i++){
-		    var opt = document.createElement('option');
-		    opt.value = i;
-		    opt.innerHTML = i;
-		    selectShelf.appendChild(opt);
-		}
-			console.log(rows);
-	});
-	
-}
-setShelvesRows();
+setShelvesRows(document.getElementById('selectRow'), document.getElementById('selectShelf'));
 
 //Load elements in list to ID warehouseTable
 function refreshUI(list) {

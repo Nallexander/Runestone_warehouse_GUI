@@ -21,8 +21,14 @@ h1,h3,h4 {
 
 }
 
+#warehouseTableMap {
+	margin-top: 10px;
+	width: 800px;
+}
+
 table, th, td {
     border: 1px solid gray;
+	align-self: center;
 }
 
 .center {
@@ -34,9 +40,6 @@ table, th, td {
 	border: 1px solid black;
 }
 
-td {
-	align: center;
-}
 
 th:hover {
 	color: grey;

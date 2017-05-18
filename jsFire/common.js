@@ -20,4 +20,4 @@ function generateTableEntry(databaseEntry) {
 }
 
 //Table header
-var tableHeader = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Temperature</th><th onclick="sortTable(3)">Light</th><th>Row</th><th>Shelf</th><th>Actions</th></tr>';
+var tableHeader = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Temperature</th><th onclick="sortTable(3)">Light</th><th onclick="sortTable(4)">Row</th><th onclick="sortTable(5)">Shelf</th><th>Actions</th></tr>';

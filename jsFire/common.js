@@ -16,7 +16,7 @@ var refMap = firebase.database().ref('maps');
 
 //Generate a table entry from the database entry
 function generateTableEntry(databaseEntry) {
-	return '<tr data-key="' + databaseEntry.key + '"><td>' + databaseEntry.key + '</td><td>' + databaseEntry.packageName + '</td><td>' + databaseEntry.temperature + '</td><td>' + databaseEntry.light + '</td><td id="rowTd' + databaseEntry.key + '">' + databaseEntry.row + '</td><td id="shelfTd' + databaseEntry.key + '">' + databaseEntry.shelf + '</td><td id=actions' + key + '><button onclick="deleteFromFB(' + "'" + databaseEntry.key + "'" + ')">Remove</button><button onclick="editFB(' + "'" + databaseEntry.key + "'" + ')">Edit</button><button onclick="movePackage(' + "'" + databaseEntry.key + "'" + ')">Move</button></tr>';
+	return '<tr data-key="' + databaseEntry.key + '"><td>' + databaseEntry.key + '</td><td>' + databaseEntry.packageName + '</td><td>' + databaseEntry.temperature + '</td><td>' + databaseEntry.light + '</td><td id="rowTd' + databaseEntry.key + '">' + databaseEntry.row + '</td><td id="shelfTd' + databaseEntry.key + '">' + databaseEntry.shelf + '</td><td id=actions' + databaseEntry.key + '><button onclick="deleteFromFB(' + "'" + databaseEntry.key + "'" + ')">Remove</button><button onclick="editFB(' + "'" + databaseEntry.key + "'" + ')">Edit</button><button onclick="movePackage(' + "'" + databaseEntry.key + "'" + ')">Move</button></tr>';
 }
 
 //Table header

@@ -24,7 +24,6 @@ map_canvas.height = mapHeight;
 
 //Draws the warehouse
 function draw_warehouse(rows, shelves) {
-	console.log(rows);
 	//Create empty arrays for storing rects in. The first of each row is initialized to empty since it should not be used
 	for (var i = 1; i <= rows+1; i++) {
 		rects.push([[]])
@@ -76,7 +75,6 @@ function fillRegisterRect(ctx, x, y, width, height, lineNo) {
 	ctx.fillRect(x, y, width, height);
 	if (lineNo > -1) {
 		rects[lineNo].push([x,y,width,height]);
-		console.log(rects);
 	}
 }
 
@@ -100,6 +98,7 @@ $('#mapCanvas').click(function(e) {
 //Displays a package in the table if it is located in row row and shelf shelf. Otherwise, displays an error message 
 function showPackage(row, shelf) {
     tableMap = document.getElementById('warehouseTableMap').innerHTML;
+    var foundPackage = false;
 	refWarehouse.orderByChild("row").equalTo(row).on("child_added", function(snapshot) {
 		console.log(snapshot.val().row);
 		console.log(snapshot.val().shelf);		
@@ -124,8 +123,9 @@ function showPackage(row, shelf) {
 		    newTableHeader = tableHeader;
 		    newTableHeader += generateTableEntry(package);
 		    document.getElementById('warehouseTableMap').innerHTML = newTableHeader;
+		    foundPackage = true;
 		}
-		else {
+		else if (!foundPackage) {
 			newTableHeader = tableHeader + "\n Sorry, no package here.";
 		    document.getElementById('warehouseTableMap').innerHTML = newTableHeader;
 		}

@@ -56,3 +56,7 @@ th:hover {
 #links {
 	text-align: center;
 }
+
+#robotImg {
+	display: none;
+}

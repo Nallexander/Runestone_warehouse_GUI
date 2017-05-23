@@ -13,10 +13,11 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var refWarehouse = firebase.database().ref('warehouse');
 var refMap = firebase.database().ref('maps');
+var refRobots = firebase.database().ref('robots');
 
 //Generate a table entry from the database entry
 function generateTableEntry(databaseEntry) {
-	return '<tr data-key="' + databaseEntry.key + '"><td>' + databaseEntry.key + '</td><td>' + databaseEntry.packageName + '</td><td>' + databaseEntry.temperature + '</td><td>' + databaseEntry.light + '</td><td id="rowTd' + databaseEntry.key + '">' + databaseEntry.row + '</td><td id="shelfTd' + databaseEntry.key + '">' + databaseEntry.shelf + '</td><td id=actions' + databaseEntry.key + '><button onclick="deleteFromFB(' + "'" + databaseEntry.key + "'" + ')">Remove</button><button onclick="editFB(' + "'" + databaseEntry.key + "'" + ')">Edit</button><button onclick="movePackage(' + "'" + databaseEntry.key + "'" + ')">Move</button></tr>';
+	return '<tr data-key="' + databaseEntry.key + '"><td>' + databaseEntry.key + '</td><td>' + databaseEntry.packageName + '</td><td>' + databaseEntry.temperature + '</td><td>' + databaseEntry.light + '</td><td id="rowTd' + databaseEntry.key + '">' + databaseEntry.row + '</td><td id="shelfTd' + databaseEntry.key + '">' + databaseEntry.shelf + '</td><td id="actions' + databaseEntry.key + '"><button onclick="deleteFromFB(' + "'" + databaseEntry.key + "'" + ')">Remove</button><button onclick="movePackage(' + "'" + databaseEntry.key + "'" + ')">Move</button></tr>';
 }
 
 //Table header
@@ -40,7 +41,6 @@ function setShelvesRows(rowDropDown, shelfDropDown) {
 		    opt.innerHTML = i;
 		    shelfDropDown.appendChild(opt);
 		}
-			console.log(rows);
 	});	
 }
 
@@ -48,12 +48,14 @@ function movePackage(key) {
 	//Create dropdown for rows
 	var rowTd = document.getElementById('rowTd' + key);
 	var currentRow = rowTd.innerHTML;
+	currentRow = parseInt(currentRow, 10);
 	rowTd.innerHTML = '<select id="selectRow' + key + '" name="Select row"></select>'
 	rowDropDown = document.getElementById('selectRow' + key);
 
 	//Create dropdown for shelves
 	var shelfTd = document.getElementById('shelfTd' + key);
 	var currentShelf = shelfTd.innerHTML;
+	currentShelf = parseInt(currentShelf, 10);
 	shelfTd.innerHTML = '<select id="selectShelf' + key + '" name="Select shelf"></select>'
 	shelfDropDown = document.getElementById('selectShelf' + key);
 
@@ -61,11 +63,36 @@ function movePackage(key) {
 	setShelvesRows(rowDropDown, shelfDropDown);
 	
 	//TODO set selected value to the current value
-	console.log(rowDropDown);
-	rowDropDown.value = 3;
-	shelfDropDown.value = parseInt(currentShelf, 10);
-	
-	
+
+
+
+	//Remove buttons and add Confirm button
+	var buttonsTd = document.getElementById('actions' + key);
+	buttonsTd.innerHTML = '<button onClick="updatePosition(' + "'" + key +  "'" + ')">Confirm</button><button onClick="showPackage(' + currentRow + ',' + currentShelf +')">Cancel</button>';
 	
 	
 }
+function cancelPosition(row, shelf) {
+	showPackage(row, shelf);
+}
+
+function updatePosition(key) {
+	row = document.getElementById('selectRow' + key).value;
+	shelf = document.getElementById('selectShelf' + key).value;
+    row = parseInt(row, 10);
+    shelf = parseInt(shelf, 10);
+	database.ref('warehouse/' + key).update( {
+		row: row,
+		shelf: shelf
+	});
+	showPackage(row, shelf);
+}
+
+function findPackage(row, shelf) {
+	refWarehouse.orderByChild("row").equalTo(row).on("child_added", function(snapshot) {	
+		if (snapshot.val().shelf == shelf) {
+			return true;
+		}
+	});
+}
+

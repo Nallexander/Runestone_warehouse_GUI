@@ -57,11 +57,6 @@ function saveToFB(packageID, packageName, temperature, light, row, shelf) {
         shelf: shelf
     });
 };
- 
- 
-function editFB(key) {
-	
-}
 
 //Deletes key from DB
 function deleteFromFB(key) {

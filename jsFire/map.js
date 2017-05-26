@@ -11,7 +11,7 @@ refMap.on("value", function(snapshot) {
 //Dimensions for the map
 var mapWidth = 800;
 var mapHeight = 500;
-var lineWidth = 12
+var lineWidth = 12;
 
 //Used for click events on the red intersections
 var rects = [];
@@ -173,7 +173,7 @@ function showPackage(row, shelf) {
 			key = snapshot.key;
 			shelfCode = snapshot.val().shelfCode;
 			temperature = snapshot.val().temperature;
-			light = snapshot.val().light;
+			stored = snapshot.val().stored;
 			row = snapshot.val().row;
 			shelf = snapshot.val().shelf;
 			package = {
@@ -181,7 +181,7 @@ function showPackage(row, shelf) {
 		        key: key,
 		        shelfCode: shelfCode,
 		        temperature: temperature,
-		        light: light,
+		        stored: stored,
 		        shelf: shelf,
 		        row: row
 		        };

@@ -23,7 +23,12 @@
 	<input type="text" id="packageID" class="inputWare" placeholder="Enter package ID" onkeypress="return pressEnter(event)" />
 	<input type="text" id="packageName" class="inputWare" placeholder="Enter package name (optional)" onkeypress="return pressEnter(event)" />
 	<input type="text" id="temperature" class="inputWare" placeholder="Enter required temperature (optional)" onkeypress="return pressEnter(event)" />
-	<input type="text" id="light" class="inputWare" placeholder="Enter required light value (optional)" onkeypress="return pressEnter(event)" />
+
+	<select id="selectStored" name="Select stored">
+		<option value="stored">Stored</option>
+		<option value="notStored">Not stored</option>
+	</select>
+
 	<select id="selectRow" name="Select row">
 		<option value="default">Choose a row</option>
 	</select>

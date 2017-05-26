@@ -17,11 +17,11 @@ var refRobots = firebase.database().ref('robots');
 
 //Generate a table entry from the database entry
 function generateTableEntry(databaseEntry) {
-	return '<tr data-key="' + databaseEntry.key + '"><td>' + databaseEntry.key + '</td><td>' + databaseEntry.packageName + '</td><td>' + databaseEntry.temperature + '</td><td>' + databaseEntry.light + '</td><td id="rowTd' + databaseEntry.key + '">' + databaseEntry.row + '</td><td id="shelfTd' + databaseEntry.key + '">' + databaseEntry.shelf + '</td><td id="actions' + databaseEntry.key + '"><button onclick="deleteFromFB(' + "'" + databaseEntry.key + "'" + ')">Remove</button><button onclick="movePackage(' + "'" + databaseEntry.key + "'" + ')">Move</button></tr>';
+	return '<tr data-key="' + databaseEntry.key + '"><td>' + databaseEntry.key + '</td><td>' + databaseEntry.packageName + '</td><td>' + databaseEntry.temperature + '</td><td>' + databaseEntry.stored + '</td><td id="rowTd' + databaseEntry.key + '">' + databaseEntry.row + '</td><td id="shelfTd' + databaseEntry.key + '">' + databaseEntry.shelf + '</td><td id="actions' + databaseEntry.key + '"><button onclick="deleteFromFB(' + "'" + databaseEntry.key + "'" + ')">Remove</button><button onclick="movePackage(' + "'" + databaseEntry.key + "'" + ')">Move</button></tr>';
 }
 
 //Table header
-var tableHeader = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Temperature</th><th onclick="sortTable(3)">Light</th><th onclick="sortTable(4)">Row</th><th onclick="sortTable(5)">Shelf</th><th>Actions</th></tr>';
+var tableHeader = '<tr><th onclick="sortTable(0)">Package ID</th><th onclick="sortTable(1)">Package Name</th><th onclick="sortTable(2)">Temperature</th><th onclick="sortTable(3)">Stored</th><th onclick="sortTable(4)">Row</th><th onclick="sortTable(5)">Shelf</th><th>Actions</th></tr>';
 
 //Adds the number of rows and shelves in DB maps to the drop down menus
 function setShelvesRows(rowDropDown, shelfDropDown) {
@@ -83,7 +83,8 @@ function updatePosition(key) {
     shelf = parseInt(shelf, 10);
 	database.ref('warehouse/' + key).update( {
 		row: row,
-		shelf: shelf
+		shelf: shelf,
+		stored: false
 	});
 	showPackage(row, shelf);
 }

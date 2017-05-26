@@ -11,6 +11,7 @@ function saveToList() {
     var packageID = document.getElementById('packageID').value.trim();
     var packageName = document.getElementById('packageName').value.trim();
     var temperature = document.getElementById('temperature').value.trim();
+    temperature = parseInt(temperature, 10);
     var selectStored = document.getElementById('selectStored');
     var stored = selectStored.options[selectStored.selectedIndex].value;
 	var storedBool = false;

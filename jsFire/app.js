@@ -11,7 +11,13 @@ function saveToList() {
     var packageID = document.getElementById('packageID').value.trim();
     var packageName = document.getElementById('packageName').value.trim();
     var temperature = document.getElementById('temperature').value.trim();
-    var light = document.getElementById('light').value.trim();
+    var selectStored = document.getElementById('selectStored');
+    var stored = selectStored.options[selectStored.selectedIndex].value;
+	var storedBool = false;
+    if (stored == 'stored') {
+	    storedBool = true;
+    }
+    
     var selectShelf = document.getElementById('selectShelf');
     var selectRow = document.getElementById('selectRow');
     var shelf = selectShelf.options[selectShelf.selectedIndex].value;
@@ -29,7 +35,7 @@ function saveToList() {
 	}	    
 	else if (packageID.length > 0) {
 		//Save values 
-        saveToFB(packageID, packageName, temperature, light, row, shelf);
+        saveToFB(packageID, packageName, temperature, storedBool, row, shelf);
         //Empty input fields
         var inputWareFields = document.getElementsByClassName('inputWare');
 		var i;
@@ -43,19 +49,20 @@ function saveToList() {
     return false;
 };
 
+
  //Saves arguments to DB warehouse
-function saveToFB(packageID, packageName, temperature, light, row, shelf) {
+function saveToFB(packageID, packageName, temperature, stored, row, shelf) {
     // this will save data to Firebase
     row = parseInt(row, 10);
     shelf = parseInt(shelf, 10);
     database.ref('warehouse/' + packageID).set( {
         packageName: packageName,
         temperature: temperature,
-        light: light,
-        stored: false,
+        stored: stored,
         row: row,
         shelf: shelf
     });
+
 };
 
 //Deletes key from DB
@@ -80,7 +87,7 @@ function addToList(data, key, list) {
     packageName = data[key].packageName ? data[key].packageName : '';
     packageID = data[key].packageID ? data[key].packageID : '';
     temperature = data[key].temperature ? data[key].temperature : '';
-    light = data[key].light ? data[key].light : '';                       
+    stored = data[key].stored;                       
     shelf = data[key].shelf;
     row = data[key].row;
     list.push({
@@ -88,7 +95,7 @@ function addToList(data, key, list) {
         key: key,
         packageID: packageID,
         temperature: temperature,
-        light: light,
+        stored: stored,
         shelf: shelf,
         row: row
     })	
@@ -106,7 +113,6 @@ refWarehouse.on("value", function(snapshot) {
     }
     // refresh the UI
     refreshUI(list);
-    
 });
 
 /**

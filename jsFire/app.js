@@ -65,10 +65,7 @@ function saveToFB(packageID, packageName, temperature, stored, row, shelf) {
 
 };
 
-//Deletes key from DB
-function deleteFromFB(key) {
-	refWarehouse.child(key).remove();
-}
+
 	
 
 setShelvesRows(document.getElementById('selectRow'), document.getElementById('selectShelf'));
@@ -171,4 +168,8 @@ function sortTable(n) {
       }
     }
   }
+}
+
+function cancelButton(row, shelf) {
+	location.reload();
 }

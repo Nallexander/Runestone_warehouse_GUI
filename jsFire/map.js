@@ -264,3 +264,7 @@ function draw_line(xStart, yStart, xEnd, yEnd, vertical, lineNo, lastLine, shelf
 	}
 	ctx.stroke();
 }
+
+function cancelButton(row, shelf) {
+	showPackage(row, shelf);
+}

@@ -97,3 +97,8 @@ function findPackage(row, shelf) {
 	});
 }
 
+//Deletes key from DB
+function deleteFromFB(key) {
+	refWarehouse.child(key).remove();
+}
+

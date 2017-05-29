@@ -60,3 +60,8 @@ th:hover {
 #robotImg {
 	display: none;
 }
+
+.inputFields {
+	width: 80%;
+	margin: 0 auto;
+}

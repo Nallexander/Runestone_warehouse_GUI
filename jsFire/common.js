@@ -68,13 +68,11 @@ function movePackage(key) {
 
 	//Remove buttons and add Confirm button
 	var buttonsTd = document.getElementById('actions' + key);
-	buttonsTd.innerHTML = '<button onClick="updatePosition(' + "'" + key +  "'" + ')">Confirm</button><button onClick="showPackage(' + currentRow + ',' + currentShelf +')">Cancel</button>';
+	buttonsTd.innerHTML = '<button onClick="updatePosition(' + "'" + key +  "'" + ')">Confirm</button><button onClick="cancelButton(' + currentRow + ',' + currentShelf +')">Cancel</button>';
 	
 	
 }
-function cancelPosition(row, shelf) {
-	showPackage(row, shelf);
-}
+
 
 function updatePosition(key) {
 	row = document.getElementById('selectRow' + key).value;
@@ -100,5 +98,6 @@ function findPackage(row, shelf) {
 //Deletes key from DB
 function deleteFromFB(key) {
 	refWarehouse.child(key).remove();
+	location.reload();
 }
 

@@ -190,13 +190,14 @@ function showPackage(row, shelf) {
 		    document.getElementById('warehouseTableMap').innerHTML = newTableHeader;
 		    foundPackage = true;
 		}
-		else if (!foundPackage) {
-			console.log("Did not find package");
-			newTableHeader = tableHeader + 
-			"<td>Sorry, no package here.</td><td></td><td></td><td></td><td>"+row+"</td><td>"+shelf+"</td><td></td>";
-		    document.getElementById('warehouseTableMap').innerHTML = newTableHeader;
-		}
-    });	
+		
+    });
+	if (!foundPackage) {
+		console.log("Did not find package");
+		newTableHeader = tableHeader + 
+		"<td>Sorry, no package here.</td><td></td><td></td><td></td><td>"+row+"</td><td>"+shelf+"</td><td></td>";
+	    document.getElementById('warehouseTableMap').innerHTML = newTableHeader;	
+	}
 }
 
 

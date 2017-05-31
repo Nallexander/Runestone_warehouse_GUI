@@ -85,6 +85,12 @@ function updatePosition(key) {
 		stored: false
 	});
 	showPackage(row, shelf);
+
+	database.ref('warehouse/' + key).update( {
+		row: row,
+		shelf: shelf,
+		stored: false
+	});
 }
 
 function findPackage(row, shelf) {

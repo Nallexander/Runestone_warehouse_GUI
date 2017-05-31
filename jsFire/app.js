@@ -105,7 +105,10 @@ refWarehouse.on("value", function(snapshot) {
     var list = [];
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
-			addToList(data, key, list);
+	        if (data[key].row != 5 && data[key].row != 5) {
+	       			addToList(data, key, list);
+		        };
+
         }
     }
     // refresh the UI
